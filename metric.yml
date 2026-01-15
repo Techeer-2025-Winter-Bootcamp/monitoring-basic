@@ -9,6 +9,12 @@ services:
       - "9090:9090"
     networks:
       - ryan_gitops-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.prom.loadbalancer.server.port=9090
+      - traefik.http.routers.prom.entryPoints=websecure
+      - traefik.http.routers.prom.rule=Host(`prom.techeer.ddns.net`)
+      - traefik.http.routers.prom.tls.certResolver=letsencrypt
   
   grafana:
     image: grafana/grafana:latest
@@ -16,6 +22,12 @@ services:
       - "3000:3000"
     networks:
       - ryan_gitops-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+      - traefik.http.routers.grafana.entryPoints=websecure
+      - traefik.http.routers.grafana.rule=Host(`grafana.techeer.ddns.net`)
+      - traefik.http.routers.grafana.tls.certResolver=letsencrypt
 
 networks:
   ryan_gitops-network:
