@@ -1,5 +1,5 @@
 services:
-  	jaeger:
+  jaeger:
     image: jaegertracing/all-in-one
     ports:
       - "16686:16686" # web
