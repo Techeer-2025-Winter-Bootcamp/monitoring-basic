@@ -7,6 +7,12 @@ services:
       - "14250:14250" # grpc
     networks:
       - ryan_gitops-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.trace.loadbalancer.server.port=16686
+      - traefik.http.routers.trace.entryPoints=websecure
+      - traefik.http.routers.trace.rule=Host(`trace.techeer.ddns.net`)
+      - traefik.http.routers.trace.tls.certResolver=letsencrypt
     
 
   otel-collector:
