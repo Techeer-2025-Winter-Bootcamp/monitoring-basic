@@ -8,7 +8,6 @@ services:
       - ryan_gitops-network
   
   promtail:
-    promtail:
     image:  grafana/promtail:latest
     container_name: promtail
     volumes:
