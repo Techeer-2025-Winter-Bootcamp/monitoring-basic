@@ -1,0 +1,26 @@
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - 3100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - ryan_gitops-network
+  
+  promtail:
+    promtail:
+    image:  grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - ./promtail/config.yaml:/etc/promtail/docker-config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro #도커 로그
+      - /var/run/docker.sock:/var/run/docker.sock #도커 소켓 (디몬)
+    command:
+      - -config.file=/etc/promtail/docker-config.yaml #설정파일
+      - -config.expand-env=true
+    networks:
+      - ryan_gitops-network
+
+networks:
+  ryan_gitops-network:
+    external: true
